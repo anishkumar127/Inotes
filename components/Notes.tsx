@@ -17,7 +17,6 @@ const Notes = () => {
     time: "",
     type: "",
   });
-  console.log(data);
 
   //   INPUT
   const handleChange = (e: any) => {
@@ -27,21 +26,32 @@ const Notes = () => {
   //   GET
   useEffect(() => {
     const savedData = localStorage.getItem("items");
-    const arrData = JSON.parse(savedData);
-    setArr(arrData);
+    setArr(JSON.parse(savedData));
     setIsTrue(false);
   }, [isTrue]);
 
+  //   const fun = () => {
+  //     if (
+  //       input.title !== "" &&
+  //       input.desc !== "" &&
+  //       input.time !== "" &&
+  //       input.type !== ""
+  //     ) {
+  //       localStorage.setItem("items", JSON.stringify(data));
+  //     }
+  //   };
+
   //  SET
   useEffect(() => {
+    // fun();
     localStorage.setItem("items", JSON.stringify(data));
-    console.log("arr", arr);
   }, [data]);
 
   //   SUBMIT
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setData((prev: any) => [...prev, input]);
+
     setIsTrue(true);
     setInput({
       title: "",
@@ -53,7 +63,6 @@ const Notes = () => {
   return (
     <>
       <h1 className="display-1 text-center">iNotes</h1>
-
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
         <Form.Control
@@ -113,9 +122,15 @@ const Notes = () => {
             <Card key={index} style={{ width: "18rem" }}>
               <Card.Body>
                 <Card.Title className="text-center">{title}</Card.Title>
-                <Card.Text>Description: {desc} </Card.Text>
-                <Card.Text>Time: {time} </Card.Text>
-                <Card.Text>Type: {type}</Card.Text>
+                <Card.Text>
+                  Description: <b>{desc}</b>{" "}
+                </Card.Text>
+                <Card.Text>
+                  Time: <b>{time}</b>{" "}
+                </Card.Text>
+                <Card.Text>
+                  Type: <b>{type}</b>
+                </Card.Text>
                 <div className="text-end">
                   <Button variant="success">Edit</Button>
                   <Button variant="danger" className="ms-2">
@@ -126,31 +141,6 @@ const Notes = () => {
             </Card>
           );
         })}
-      {/* {isDisplay ? 
-      
-      {data?.map((item)=>{
-        return(
-            <div>
-              <Card style={{ width: "18rem" }}>
-                <Card.Body>
-                  <Card.Title className="text-center">Title</Card.Title>
-                  <Card.Text>Description: </Card.Text>
-                  <Card.Text>Time: </Card.Text>
-                  <Card.Text>Type: </Card.Text>
-                  <div className="text-end">
-                    <Button variant="success">Edit</Button>
-                    <Button variant="danger" className="ms-2">
-                      Delete
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            </div>
-          )
-      })}
-       : (
-        ""
-      )} */}
     </>
   );
 };
