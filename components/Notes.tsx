@@ -7,15 +7,10 @@ import { useEffect, useState } from "react";
 import { title } from "process";
 
 const Notes = () => {
-  //   const [arr, setArr] = useState<any>([]);
-  const [data, setData] = useState<any>([
-    {
-      title: "",
-      desc: "",
-      time: "",
-      type: "",
-    },
-  ]);
+  const [arr, setArr] = useState<any>([]);
+  const [data, setData] = useState<any>([]);
+  const [isTrue, setIsTrue] = useState(false);
+
   const [input, setInput] = useState({
     title: "",
     desc: "",
@@ -29,25 +24,25 @@ const Notes = () => {
     const { name, value } = e.target;
     setInput((values: any) => ({ ...values, [name]: value }));
   };
-
   //   GET
   useEffect(() => {
     const savedData = localStorage.getItem("items");
-    console.log("m", savedData);
-    setData(savedData ? JSON.parse(savedData) : []);
-  }, []);
+    const arrData = JSON.parse(savedData);
+    setArr(arrData);
+    setIsTrue(false);
+  }, [isTrue]);
 
   //  SET
   useEffect(() => {
-    // if (typeof localStorage !== "undefined") {
     localStorage.setItem("items", JSON.stringify(data));
-    // }
+    console.log("arr", arr);
   }, [data]);
 
   //   SUBMIT
   const handleSubmit = (e: any) => {
     e.preventDefault();
     setData((prev: any) => [...prev, input]);
+    setIsTrue(true);
     setInput({
       title: "",
       desc: "",
@@ -111,10 +106,9 @@ const Notes = () => {
 
       {/* CARD SECTION */}
 
-      {data &&
-        data.map((item: any, index: number) => {
+      {arr &&
+        arr.map((item: any, index: number) => {
           const { title, desc, time, type } = item;
-          console.log(title);
           return (
             <Card key={index} style={{ width: "18rem" }}>
               <Card.Body>
