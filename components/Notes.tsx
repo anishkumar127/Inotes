@@ -6,6 +6,7 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { useEffect, useState } from "react";
 import { title } from "process";
 import { parse } from "path";
+import NavbarSection from "./NavbarSection";
 
 const Notes = () => {
   const [arr, setArr] = useState<any>([]);
@@ -110,7 +111,7 @@ const Notes = () => {
   };
   return (
     <>
-      <h1 className="display-1 text-center"> 📝iNotes</h1>
+      <NavbarSection data={data} />
       <InputGroup className={`${!dialog && "mb-3"} `}>
         <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
 
