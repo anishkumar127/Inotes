@@ -15,6 +15,7 @@ const Notes = () => {
   const [dialog, setDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
+  const [isSearch, setIsSearch] = useState(true);
 
   const [input, setInput] = useState({
     title: "",
@@ -111,7 +112,13 @@ const Notes = () => {
   };
   return (
     <>
-      <NavbarSection data={data} />
+      <NavbarSection
+        data={data}
+        handleDelete={handleDelete}
+        handleUpdate={handleUpdate}
+        setIsSearch={setIsSearch}
+        isSearch={isSearch}
+      />
       <InputGroup className={`${!dialog && "mb-3"} `}>
         <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
 
@@ -172,43 +179,45 @@ const Notes = () => {
       </div>
 
       {/* CARD SECTION */}
-      <div className="containerStyleCard">
-        {arr &&
-          arr.map((item: any, index: number) => {
-            const { title, desc, time, type } = item;
-            return (
-              <Card key={index} style={{ width: "18rem" }}>
-                <Card.Body>
-                  <Card.Title className="text-center">{title}</Card.Title>
-                  <Card.Text>
-                    Description: <b>{desc}</b>{" "}
-                  </Card.Text>
-                  <Card.Text>
-                    Time: <b>{time}</b>{" "}
-                  </Card.Text>
-                  <Card.Text>
-                    Type: <b>{type}</b>
-                  </Card.Text>
-                  <div className="text-end">
-                    <Button
-                      variant="success"
-                      onClick={() => handleUpdate(index)}
-                    >
-                      Edit
-                    </Button>
-                    <Button
-                      variant="danger"
-                      className="ms-2"
-                      onClick={() => handleDelete(index)}
-                    >
-                      Delete
-                    </Button>
-                  </div>
-                </Card.Body>
-              </Card>
-            );
-          })}
-      </div>
+      {isSearch ? (
+        <div className="containerStyleCard">
+          {arr &&
+            arr.map((item: any, index: number) => {
+              const { title, desc, time, type } = item;
+              return (
+                <Card key={index} style={{ width: "18rem" }}>
+                  <Card.Body>
+                    <Card.Title className="text-center">{title}</Card.Title>
+                    <Card.Text>
+                      Description: <b>{desc}</b>{" "}
+                    </Card.Text>
+                    <Card.Text>
+                      Time: <b>{time}</b>{" "}
+                    </Card.Text>
+                    <Card.Text>
+                      Type: <b>{type}</b>
+                    </Card.Text>
+                    <div className="text-end">
+                      <Button
+                        variant="success"
+                        onClick={() => handleUpdate(index)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="ms-2"
+                        onClick={() => handleDelete(index)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+        </div>
+      ) : null}
     </>
   );
 };

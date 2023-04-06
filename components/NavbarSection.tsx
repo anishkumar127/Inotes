@@ -8,12 +8,15 @@ import Button from "react-bootstrap/Button";
 import Image from "next/image";
 import light from "../assets/images/light.svg";
 import dark from "../assets/images/moon.svg";
+import { Card } from "react-bootstrap";
 
-interface Props {
-  data: any;
-}
-
-const NavbarSection = ({ data }: Props) => {
+const NavbarSection = ({
+  data,
+  handleUpdate,
+  handleDelete,
+  setIsSearch,
+  isSearch,
+}: any) => {
   const [theme, setTheme] = useState(false);
   const [searchText, setSearchText] = useState("");
   const [matchedSearch, setMatchedSearch] = useState([]);
@@ -36,29 +39,24 @@ const NavbarSection = ({ data }: Props) => {
 
   // onSearchHandle
   const onSearchHandle = () => {
+    setIsSearch(false);
     const res = data.filter((item: any, i: any) => {
       console.log(i);
       return item.title === searchText;
     });
-    // const index = data.filter
-    // const r =
-    console.log(res);
-    if (res) {
+    if (res.length > 0) {
       setMatchedSearch(res);
     }
   };
 
-  console.log(matchedSearch);
-
   return (
-    <>
+    <div className="position-relative">
       <Navbar bg="dark" variant="dark" className="mb-3">
         <Container>
           <Navbar.Brand href="#home">📝iNotes</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#features">About</Nav.Link>
-            {/* <Nav.Link href="#pricing">Pricing</Nav.Link> */}
             <Form className="d-flex">
               <Form.Control
                 type="search"
@@ -93,8 +91,48 @@ const NavbarSection = ({ data }: Props) => {
           </Nav>
         </Container>
       </Navbar>
-      {/* <div>{}</div> */}
-    </>
+      {/* Search Data */}
+
+      {isSearch ? null : (
+        <div className="containerStyleCard position-absolute card-top">
+          {matchedSearch &&
+            matchedSearch.map((item: any, index: number) => {
+              const { title, desc, time, type } = item;
+              return (
+                <Card key={index} style={{ width: "18rem" }}>
+                  <Card.Body>
+                    <Card.Title className="text-center">{title}</Card.Title>
+                    <Card.Text>
+                      Description: <b>{desc}</b>{" "}
+                    </Card.Text>
+                    <Card.Text>
+                      Time: <b>{time}</b>{" "}
+                    </Card.Text>
+                    <Card.Text>
+                      Type: <b>{type}</b>
+                    </Card.Text>
+                    <div className="text-end">
+                      <Button
+                        variant="success"
+                        onClick={() => handleUpdate(index)}
+                      >
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        className="ms-2"
+                        onClick={() => handleDelete(index)}
+                      >
+                        Delete
+                      </Button>
+                    </div>
+                  </Card.Body>
+                </Card>
+              );
+            })}
+        </div>
+      )}
+    </div>
   );
 };
 
