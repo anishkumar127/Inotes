@@ -5,6 +5,7 @@ import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
 import { useEffect, useState } from "react";
 import { title } from "process";
+import { parse } from "path";
 
 const Notes = () => {
   const [arr, setArr] = useState<any>([]);
@@ -30,11 +31,31 @@ const Notes = () => {
     setIsTrue(false);
   }, [isTrue]);
 
+  //   SET AGAIN
+  useEffect(() => {
+    // if (localStorage.getItem("items")) {
+    //   const savedDataM: any = localStorage.getItem("items");
+    //   localStorage.setItem("items", savedDataM);
+    // }
+    /*
+    It seems that you are missing a step in your SET AGAIN effect. You are currently getting the saved data from local storage but not parsing it and setting it to the data state. Therefore, when you submit a new data, you are only appending it to the empty data state, but not including the existing data from local storage.
+
+    With this code, the SET AGAIN effect will now parse the saved data and set it to the data state. When you submit new data, it will append to the existing data in data state, and then be stored in local storage through the SET effect.
+     */
+    // fixed
+    if (localStorage.getItem("items")) {
+      const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
+      setData(savedDataM);
+    }
+  }, []);
+
   //  SET
   useEffect(() => {
-    const savedData = localStorage.getItem("items");
-    const parsedData = savedData ? JSON.parse(savedData) : [];
-    localStorage.setItem("items", JSON.stringify([...parsedData, ...data]));
+    // const savedData = localStorage.getItem("items");
+    // const parsedData = savedData ? JSON.parse(savedData) : [];
+    if (data.length !== 0) {
+      localStorage.setItem("items", JSON.stringify(data));
+    }
   }, [data]);
 
   //   SUBMIT
