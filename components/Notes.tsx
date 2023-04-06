@@ -11,6 +11,9 @@ const Notes = () => {
   const [arr, setArr] = useState<any>([]);
   const [data, setData] = useState<any>([]);
   const [isTrue, setIsTrue] = useState(false);
+  const [dialog, setDialog] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [editIndex, setEditIndex] = useState(-1);
 
   const [input, setInput] = useState({
     title: "",
@@ -31,7 +34,6 @@ const Notes = () => {
       return i !== index;
     });
     setArr(res);
-
     // clear from local storage
     const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
     savedDataM.splice(index, 1);
@@ -40,9 +42,9 @@ const Notes = () => {
 
   //   UPDATE
   const handleUpdate = (index: number) => {
-    console.log(index);
+    setEdit(true);
+    setEditIndex(index);
     const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
-    console.log(savedDataM[index]);
     const { title, desc, time, type } = savedDataM[index];
     setInput({
       title,
@@ -50,7 +52,6 @@ const Notes = () => {
       time,
       type,
     });
-    // GET OLD DATA
   };
   //   GET
   useEffect(() => {
@@ -77,9 +78,29 @@ const Notes = () => {
   //   SUBMIT
   const handleSubmit = (e: any) => {
     e.preventDefault();
-
-    setData((prev: any) => [...prev, input]);
-    setIsTrue(true);
+    if (input.title === "") {
+      setDialog(true);
+      setTimeout(() => {
+        setDialog(false);
+      }, 3000);
+    } else {
+      setData((prev: any) => [...prev, input]);
+      setIsTrue(true);
+      setInput({
+        title: "",
+        desc: "",
+        time: "",
+        type: "",
+      });
+    }
+  };
+  //   UPDATE HANDLE
+  const UpdateSubmit = () => {
+    const newData = [...data];
+    newData[editIndex] = input;
+    setData(newData);
+    arr.splice(editIndex, 1, input);
+    setEdit(false);
     setInput({
       title: "",
       desc: "",
@@ -90,8 +111,9 @@ const Notes = () => {
   return (
     <>
       <h1 className="display-1 text-center"> 📝iNotes</h1>
-      <InputGroup className="mb-3">
+      <InputGroup className={`${!dialog && "mb-3"} `}>
         <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
+
         <Form.Control
           placeholder="add title..."
           aria-label="title"
@@ -101,6 +123,8 @@ const Notes = () => {
           onChange={handleChange}
         />
       </InputGroup>
+      {dialog && <p className="text-danger mb-0">Please Enter Title</p>}
+
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
         <Form.Control
@@ -135,9 +159,15 @@ const Notes = () => {
         />
       </InputGroup>
       <div className="text-end">
-        <Button variant="primary" onClick={handleSubmit} type="submit">
-          Submit
-        </Button>
+        {edit ? (
+          <Button variant="success" onClick={UpdateSubmit} type="submit">
+            Update
+          </Button>
+        ) : (
+          <Button variant="primary" onClick={handleSubmit} type="submit">
+            Submit
+          </Button>
+        )}
       </div>
 
       {/* CARD SECTION */}
