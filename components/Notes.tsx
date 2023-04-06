@@ -113,33 +113,34 @@ const Notes = () => {
       </div>
 
       {/* CARD SECTION */}
-
-      {arr &&
-        arr.map((item: any, index: number) => {
-          const { title, desc, time, type } = item;
-          return (
-            <Card key={index} style={{ width: "18rem" }}>
-              <Card.Body>
-                <Card.Title className="text-center">{title}</Card.Title>
-                <Card.Text>
-                  Description: <b>{desc}</b>{" "}
-                </Card.Text>
-                <Card.Text>
-                  Time: <b>{time}</b>{" "}
-                </Card.Text>
-                <Card.Text>
-                  Type: <b>{type}</b>
-                </Card.Text>
-                <div className="text-end">
-                  <Button variant="success">Edit</Button>
-                  <Button variant="danger" className="ms-2">
-                    Delete
-                  </Button>
-                </div>
-              </Card.Body>
-            </Card>
-          );
-        })}
+      <div className="containerStyleCard">
+        {arr &&
+          arr.map((item: any, index: number) => {
+            const { title, desc, time, type } = item;
+            return (
+              <Card key={index} style={{ width: "18rem" }}>
+                <Card.Body>
+                  <Card.Title className="text-center">{title}</Card.Title>
+                  <Card.Text>
+                    Description: <b>{desc}</b>{" "}
+                  </Card.Text>
+                  <Card.Text>
+                    Time: <b>{time}</b>{" "}
+                  </Card.Text>
+                  <Card.Text>
+                    Type: <b>{type}</b>
+                  </Card.Text>
+                  <div className="text-end">
+                    <Button variant="success">Edit</Button>
+                    <Button variant="danger" className="ms-2">
+                      Delete
+                    </Button>
+                  </div>
+                </Card.Body>
+              </Card>
+            );
+          })}
+      </div>
     </>
   );
 };
