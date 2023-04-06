@@ -24,6 +24,34 @@ const Notes = () => {
     const { name, value } = e.target;
     setInput((values: any) => ({ ...values, [name]: value }));
   };
+
+  //   DELETE
+  const handleDelete = (index: number) => {
+    const res = arr.filter((item: any, i: number) => {
+      return i !== index;
+    });
+    setArr(res);
+
+    // clear from local storage
+    const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
+    savedDataM.splice(index, 1);
+    localStorage.setItem("items", JSON.stringify(savedDataM));
+  };
+
+  //   UPDATE
+  const handleUpdate = (index: number) => {
+    console.log(index);
+    const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
+    console.log(savedDataM[index]);
+    const { title, desc, time, type } = savedDataM[index];
+    setInput({
+      title,
+      desc,
+      time,
+      type,
+    });
+    // GET OLD DATA
+  };
   //   GET
   useEffect(() => {
     const savedData = localStorage.getItem("items");
@@ -131,8 +159,17 @@ const Notes = () => {
                     Type: <b>{type}</b>
                   </Card.Text>
                   <div className="text-end">
-                    <Button variant="success">Edit</Button>
-                    <Button variant="danger" className="ms-2">
+                    <Button
+                      variant="success"
+                      onClick={() => handleUpdate(index)}
+                    >
+                      Edit
+                    </Button>
+                    <Button
+                      variant="danger"
+                      className="ms-2"
+                      onClick={() => handleDelete(index)}
+                    >
                       Delete
                     </Button>
                   </div>
