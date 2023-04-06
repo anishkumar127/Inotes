@@ -7,10 +7,17 @@
 .containerStyleCard {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
   justify-items: center;
 }
 
 .card-top {
   top: 340px;
+}
+
+.form_gap {
+  gap: 20px;
+}
+
+.light_mode {
+  color: black !important;
 }

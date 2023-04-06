@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import Offcanvas from "react-bootstrap/Offcanvas";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -19,6 +20,7 @@ const NavbarSection = ({
 }: any) => {
   const [theme, setTheme] = useState(false);
   const [searchText, setSearchText] = useState("");
+  const [themeColor, setThemeColor] = useState("dark");
 
   const onFocus = () => {
     setIsSearch(false);
@@ -27,6 +29,11 @@ const NavbarSection = ({
   useEffect(() => {
     const getTheme: any = localStorage.getItem("theme");
     setTheme(JSON.parse(getTheme));
+    if (theme) {
+      setThemeColor("light");
+    } else {
+      setThemeColor("dark");
+    }
   }, [theme]);
 
   const handleTheme = () => {
@@ -47,52 +54,66 @@ const NavbarSection = ({
 
   return (
     <div className="position-relative">
-      <Navbar bg="dark" variant="dark" className="mb-3">
-        <Container>
-          <Navbar.Brand href="#home">📝iNotes</Navbar.Brand>
-          <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">About</Nav.Link>
-            <Form className="d-flex">
-              <Form.Control
-                type="search"
-                placeholder="Search"
-                className="me-2"
-                aria-label="Search"
-                onChange={onSearch}
-                ref={onFocus}
-                onFocus={onFocus}
-              />
-              <Button variant="outline-success" onClick={onSearchHandle}>
-                Search
-              </Button>
-            </Form>
-            {theme ? (
-              <Image
-                src={dark}
-                width={35}
-                height={35}
-                alt="dark_mode"
-                className="bg-white"
-                onClick={handleTheme}
-              />
-            ) : (
-              <Image
-                src={light}
-                width={35}
-                height={35}
-                alt="light_mode"
-                className="bg-white"
-                onClick={handleTheme}
-              />
-            )}
-          </Nav>
+      <Navbar bg={themeColor} variant="dark" className="mb-3">
+        <Container fluid>
+          <Navbar.Brand className={`${theme ? "light_mode" : ""}`} href="#home">
+            📝iNotes
+          </Navbar.Brand>
+          <Navbar.Offcanvas placement="end">
+            <Offcanvas.Body>
+              <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav.Link
+                  href="#home"
+                  className={`${theme ? "light_mode" : ""}`}
+                >
+                  Home
+                </Nav.Link>
+                <Nav.Link
+                  href="#features"
+                  className={`${theme ? "light_mode" : ""}`}
+                >
+                  About
+                </Nav.Link>
+              </Nav>
+
+              <Form className="d-flex form_gap align-items-center">
+                <Form.Control
+                  type="search"
+                  placeholder="Search"
+                  className="me-2"
+                  aria-label="Search"
+                  onChange={onSearch}
+                  onFocus={onFocus}
+                />
+                <Button variant="outline-success" onClick={onSearchHandle}>
+                  Search
+                </Button>
+                {theme ? (
+                  <Image
+                    src={dark}
+                    width={35}
+                    height={35}
+                    alt="dark_mode"
+                    onClick={handleTheme}
+                  />
+                ) : (
+                  <Image
+                    src={light}
+                    width={35}
+                    height={35}
+                    alt="light_mode"
+                    onClick={handleTheme}
+                  />
+                )}
+              </Form>
+            </Offcanvas.Body>
+          </Navbar.Offcanvas>
         </Container>
       </Navbar>
       {/* Search Data */}
 
       {isSearch ? null : (
-        <div className="containerStyleCard position-absolute card-top">
+        <div className="containerStyleCard d-flex gap-3 flex-wrap position-absolute card-top">
           {data
             .filter((item: any) => {
               return searchText.toLowerCase() === ""

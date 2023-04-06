@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { title } from "process";
 import { parse } from "path";
 import NavbarSection from "./NavbarSection";
+import OffcanvasExample from "./OffcanvasExample";
 
 const Notes = () => {
   const [arr, setArr] = useState<any>([]);
