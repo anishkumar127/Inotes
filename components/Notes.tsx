@@ -1,13 +1,9 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import ListGroup from "react-bootstrap/ListGroup";
 import { useEffect, useState } from "react";
-import { title } from "process";
-import { parse } from "path";
 import NavbarSection from "./NavbarSection";
-import OffcanvasExample from "./OffcanvasExample";
+import CardDisplay from "./CardDisplay";
 
 const Notes = () => {
   const [arr, setArr] = useState<any>([]);
@@ -16,7 +12,8 @@ const Notes = () => {
   const [dialog, setDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
-  const [isSearch, setIsSearch] = useState(true);
+  const [searchText, setSearchText] = useState("");
+  //   const [isSearch, setIsSearch] = useState(true);
 
   const [input, setInput] = useState({
     title: "",
@@ -111,15 +108,16 @@ const Notes = () => {
       type: "",
     });
   };
+
+  //   SEARCH
+  const onSearch = (e: any) => {
+    const { value } = e.target;
+    setSearchText(value);
+  };
+
   return (
     <>
-      <NavbarSection
-        data={data}
-        handleDelete={handleDelete}
-        handleUpdate={handleUpdate}
-        setIsSearch={setIsSearch}
-        isSearch={isSearch}
-      />
+      <NavbarSection onSearch={onSearch} />
       <div className="">
         <InputGroup className={`${!dialog && "mb-3"} `}>
           <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
@@ -181,47 +179,14 @@ const Notes = () => {
           </Button>
         )}
       </div>
-
       {/* CARD SECTION */}
-      {isSearch ? (
-        <div className="containerStyleCard">
-          {arr &&
-            arr.map((item: any, index: number) => {
-              const { title, desc, time, type } = item;
-              return (
-                <Card key={index} style={{ width: "18rem" }}>
-                  <Card.Body>
-                    <Card.Title className="text-center">{title}</Card.Title>
-                    <Card.Text>
-                      Description: <b>{desc}</b>{" "}
-                    </Card.Text>
-                    <Card.Text>
-                      Time: <b>{time}</b>{" "}
-                    </Card.Text>
-                    <Card.Text>
-                      Type: <b>{type}</b>
-                    </Card.Text>
-                    <div className="text-end">
-                      <Button
-                        variant="success"
-                        onClick={() => handleUpdate(index)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        className="ms-2"
-                        onClick={() => handleDelete(index)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              );
-            })}
-        </div>
-      ) : null}
+      <CardDisplay
+        arr={arr}
+        edit={edit}
+        handleUpdate={handleUpdate}
+        handleDelete={handleDelete}
+        searchText={searchText}
+      />
     </>
   );
 };

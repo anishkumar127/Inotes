@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -9,22 +9,10 @@ import Button from "react-bootstrap/Button";
 import Image from "next/image";
 import light from "../assets/images/light.svg";
 import dark from "../assets/images/moon.svg";
-import { Card } from "react-bootstrap";
 
-const NavbarSection = ({
-  data,
-  handleUpdate,
-  handleDelete,
-  setIsSearch,
-  isSearch,
-}: any) => {
+const NavbarSection = ({ onSearch }: any) => {
   const [theme, setTheme] = useState(false);
-  const [searchText, setSearchText] = useState("");
   const [themeColor, setThemeColor] = useState("dark");
-
-  const onFocus = () => {
-    setIsSearch(false);
-  };
 
   useEffect(() => {
     const getTheme: any = localStorage.getItem("theme");
@@ -41,20 +29,9 @@ const NavbarSection = ({
     localStorage.setItem("theme", JSON.stringify(!theme));
   };
 
-  // searchChange
-  const onSearch = (e: any) => {
-    const { value } = e.target;
-    setSearchText(value);
-  };
-
-  // onSearchHandle
-  const onSearchHandle = () => {
-    setIsSearch(false);
-  };
-
   return (
-    <div className="position-relative">
-      <Navbar bg={themeColor} variant="dark" className="mb-3">
+    <div>
+      {/* <Navbar bg={themeColor} variant="dark" className="mb-3">
         <Container fluid>
           <Navbar.Brand className={`${theme ? "light_mode" : ""}`} href="#home">
             📝iNotes
@@ -83,11 +60,8 @@ const NavbarSection = ({
                   className="me-2"
                   aria-label="Search"
                   onChange={onSearch}
-                  onFocus={onFocus}
                 />
-                <Button variant="outline-success" onClick={onSearchHandle}>
-                  Search
-                </Button>
+                <Button variant="outline-success">Search</Button>
                 {theme ? (
                   <Image
                     src={dark}
@@ -109,53 +83,73 @@ const NavbarSection = ({
             </Offcanvas.Body>
           </Navbar.Offcanvas>
         </Container>
-      </Navbar>
-      {/* Search Data */}
+      </Navbar> */}
 
-      {isSearch ? null : (
-        <div className="containerStyleCard d-flex gap-3 flex-wrap position-absolute card-top">
-          {data
-            .filter((item: any) => {
-              return searchText.toLowerCase() === ""
-                ? item
-                : item.title.toLowerCase().includes(searchText);
-            })
-            .map((item: any, index: number) => {
-              const { title, desc, time, type } = item;
-              return (
-                <Card key={index} style={{ width: "18rem" }}>
-                  <Card.Body>
-                    <Card.Title className="text-center">{title}</Card.Title>
-                    <Card.Text>
-                      Description: <b>{desc}</b>{" "}
-                    </Card.Text>
-                    <Card.Text>
-                      Time: <b>{time}</b>{" "}
-                    </Card.Text>
-                    <Card.Text>
-                      Type: <b>{type}</b>
-                    </Card.Text>
-                    <div className="text-end">
-                      <Button
-                        variant="success"
-                        onClick={() => handleUpdate(index)}
-                      >
-                        Edit
-                      </Button>
-                      <Button
-                        variant="danger"
-                        className="ms-2"
-                        onClick={() => handleDelete(index)}
-                      >
-                        Delete
-                      </Button>
-                    </div>
-                  </Card.Body>
-                </Card>
-              );
-            })}
+      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+        <div className="container-fluid">
+          <a className={`navbar-brand ${theme ? "light_mode" : ""}`} href="#">
+            📝iNotes
+          </a>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon" />
+          </button>
+          <div className="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+              <li className="nav-item">
+                <a
+                  className={`nav-link active ${theme ? "light_mode" : ""}`}
+                  aria-current="page"
+                  href="#"
+                >
+                  Home
+                </a>
+              </li>
+              <li className="nav-item">
+                <a className={`nav-link ${theme ? "light_mode" : ""}`} href="#">
+                  About
+                </a>
+              </li>
+            </ul>
+            <form className="d-flex form_gap align-items-center" role="search">
+              <input
+                className="form-control me-2"
+                type="search"
+                placeholder="Search"
+                aria-label="Search"
+                onChange={onSearch}
+              />
+              <button className="btn btn-outline-success" type="submit">
+                Search
+              </button>
+              {theme ? (
+                <Image
+                  src={dark}
+                  width={35}
+                  height={35}
+                  alt="dark_mode"
+                  onClick={handleTheme}
+                />
+              ) : (
+                <Image
+                  src={light}
+                  width={35}
+                  height={35}
+                  alt="light_mode"
+                  onClick={handleTheme}
+                />
+              )}
+            </form>
+          </div>
         </div>
-      )}
+      </nav>
     </div>
   );
 };
