@@ -26,32 +26,34 @@ const Notes = () => {
   //   GET
   useEffect(() => {
     const savedData = localStorage.getItem("items");
-    setArr(JSON.parse(savedData));
+    setArr(savedData ? JSON.parse(savedData) : []);
     setIsTrue(false);
   }, [isTrue]);
 
-  //   const fun = () => {
-  //     if (
-  //       input.title !== "" &&
-  //       input.desc !== "" &&
-  //       input.time !== "" &&
-  //       input.type !== ""
-  //     ) {
-  //       localStorage.setItem("items", JSON.stringify(data));
-  //     }
-  //   };
-
   //  SET
   useEffect(() => {
-    // fun();
-    localStorage.setItem("items", JSON.stringify(data));
+    // const savedData = localStorage.getItem("items");
+    // const parsedData = savedData ? JSON.parse(savedData) : [];
+    // // localStorage.setItem("items", JSON.stringify([...parsedData, ...data]));
+    // if (window.performance.navigation.type === 1) {
+    //   localStorage.setItem("items", JSON.stringify([...parsedData, ...data]));
+    // }
+    // if (data.length !== 0) {
+    //   localStorage.setItem(
+    //     "items",
+    //     JSON.stringify([
+    //       ...JSON.parse(localStorage.getItem("items") || "[]"),
+    //       ...data,
+    //     ])
+    //   );
+    // }
   }, [data]);
 
   //   SUBMIT
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    setData((prev: any) => [...prev, input]);
 
+    setData((prev: any) => [...prev, input]);
     setIsTrue(true);
     setInput({
       title: "",
@@ -62,7 +64,7 @@ const Notes = () => {
   };
   return (
     <>
-      <h1 className="display-1 text-center">iNotes</h1>
+      <h1 className="display-1 text-center"> 📝iNotes</h1>
       <InputGroup className="mb-3">
         <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
         <Form.Control
