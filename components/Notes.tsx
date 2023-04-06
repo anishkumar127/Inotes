@@ -119,53 +119,56 @@ const Notes = () => {
         setIsSearch={setIsSearch}
         isSearch={isSearch}
       />
-      <InputGroup className={`${!dialog && "mb-3"} `}>
-        <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
+      <div className="">
+        <InputGroup className={`${!dialog && "mb-3"} `}>
+          <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
 
-        <Form.Control
-          placeholder="add title..."
-          aria-label="title"
-          aria-describedby="basic-addon1"
-          name="title"
-          value={input.title}
-          onChange={handleChange}
-        />
-      </InputGroup>
-      {dialog && <p className="text-danger mb-0">Please Enter Title</p>}
+          <Form.Control
+            placeholder="add title..."
+            aria-label="title"
+            aria-describedby="basic-addon1"
+            name="title"
+            value={input.title}
+            onChange={handleChange}
+          />
+        </InputGroup>
+        {dialog && <p className="text-danger mb-0">Please Enter Title</p>}
 
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
-        <Form.Control
-          placeholder="add desc..."
-          aria-label="desc"
-          aria-describedby="basic-addon1"
-          name="desc"
-          value={input.desc}
-          onChange={handleChange}
-        />
-      </InputGroup>
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">Time</InputGroup.Text>
-        <Form.Control
-          placeholder="add time..."
-          aria-label="time"
-          aria-describedby="basic-addon1"
-          name="time"
-          value={input.time}
-          onChange={handleChange}
-        />
-      </InputGroup>
-      <InputGroup className="mb-3">
-        <InputGroup.Text id="basic-addon1">Type</InputGroup.Text>
-        <Form.Control
-          placeholder="add type..."
-          aria-label="type"
-          aria-describedby="basic-addon1"
-          name="type"
-          value={input.type}
-          onChange={handleChange}
-        />
-      </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
+          <Form.Control
+            placeholder="add desc..."
+            aria-label="desc"
+            aria-describedby="basic-addon1"
+            name="desc"
+            value={input.desc}
+            onChange={handleChange}
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">Time</InputGroup.Text>
+          <Form.Control
+            placeholder="add time..."
+            aria-label="time"
+            aria-describedby="basic-addon1"
+            name="time"
+            value={input.time}
+            onChange={handleChange}
+          />
+        </InputGroup>
+        <InputGroup className="mb-3">
+          <InputGroup.Text id="basic-addon1">Type</InputGroup.Text>
+          <Form.Control
+            placeholder="add type..."
+            aria-label="type"
+            aria-describedby="basic-addon1"
+            name="type"
+            value={input.type}
+            onChange={handleChange}
+          />
+        </InputGroup>
+      </div>
+
       <div className="text-end">
         {edit ? (
           <Button variant="success" onClick={UpdateSubmit} type="submit">

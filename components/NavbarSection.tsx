@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -19,7 +19,10 @@ const NavbarSection = ({
 }: any) => {
   const [theme, setTheme] = useState(false);
   const [searchText, setSearchText] = useState("");
-  const [matchedSearch, setMatchedSearch] = useState([]);
+
+  const onFocus = () => {
+    setIsSearch(false);
+  };
 
   useEffect(() => {
     const getTheme: any = localStorage.getItem("theme");
@@ -40,12 +43,6 @@ const NavbarSection = ({
   // onSearchHandle
   const onSearchHandle = () => {
     setIsSearch(false);
-    const res = data.filter((item: any, i: any) => {
-      return item.title === searchText;
-    });
-    if (res.length > 0) {
-      setMatchedSearch(res);
-    }
   };
 
   return (
@@ -63,6 +60,8 @@ const NavbarSection = ({
                 className="me-2"
                 aria-label="Search"
                 onChange={onSearch}
+                ref={onFocus}
+                onFocus={onFocus}
               />
               <Button variant="outline-success" onClick={onSearchHandle}>
                 Search
@@ -94,8 +93,13 @@ const NavbarSection = ({
 
       {isSearch ? null : (
         <div className="containerStyleCard position-absolute card-top">
-          {matchedSearch &&
-            matchedSearch.map((item: any, index: number) => {
+          {data
+            .filter((item: any) => {
+              return searchText.toLowerCase() === ""
+                ? item
+                : item.title.toLowerCase().includes(searchText);
+            })
+            .map((item: any, index: number) => {
               const { title, desc, time, type } = item;
               return (
                 <Card key={index} style={{ width: "18rem" }}>
