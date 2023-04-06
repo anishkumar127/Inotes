@@ -41,7 +41,6 @@ const NavbarSection = ({
   const onSearchHandle = () => {
     setIsSearch(false);
     const res = data.filter((item: any, i: any) => {
-      console.log(i);
       return item.title === searchText;
     });
     if (res.length > 0) {
