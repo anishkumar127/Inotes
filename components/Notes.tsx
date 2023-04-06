@@ -32,21 +32,9 @@ const Notes = () => {
 
   //  SET
   useEffect(() => {
-    // const savedData = localStorage.getItem("items");
-    // const parsedData = savedData ? JSON.parse(savedData) : [];
-    // // localStorage.setItem("items", JSON.stringify([...parsedData, ...data]));
-    // if (window.performance.navigation.type === 1) {
-    //   localStorage.setItem("items", JSON.stringify([...parsedData, ...data]));
-    // }
-    // if (data.length !== 0) {
-    //   localStorage.setItem(
-    //     "items",
-    //     JSON.stringify([
-    //       ...JSON.parse(localStorage.getItem("items") || "[]"),
-    //       ...data,
-    //     ])
-    //   );
-    // }
+    const savedData = localStorage.getItem("items");
+    const parsedData = savedData ? JSON.parse(savedData) : [];
+    localStorage.setItem("items", JSON.stringify([...parsedData, ...data]));
   }, [data]);
 
   //   SUBMIT
