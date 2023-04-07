@@ -1,13 +1,11 @@
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import { SearchContext } from "@/context/context";
+import { useContext } from "react";
 
-const CardDisplay = ({
-  arr,
-  handleUpdate,
-  handleDelete,
-  searchText,
-  edit,
-}: any) => {
+const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
+  const { searchText, themeColor, setThemeColor, theme }: any =
+    useContext(SearchContext);
   return (
     <>
       <div className="containerStyleCard">
@@ -20,7 +18,11 @@ const CardDisplay = ({
           .map((item: any, index: number) => {
             const { title, desc, time, type } = item;
             return (
-              <Card key={index} style={{ width: "18rem" }}>
+              <Card
+                className={`${theme ? "light" : "dark"}`}
+                key={index}
+                style={{ width: "22rem", margin: "22px" }}
+              >
                 <Card.Body>
                   <Card.Title className="text-center">{title}</Card.Title>
                   <Card.Text>

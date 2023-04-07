@@ -1,0 +1,35 @@
+:root {
+  /* dark mode */
+  --bg-transparent: transparent;
+  --color-white: white;
+  --border: 2px solid white;
+  --border-radius: 22px;
+}
+
+/* 
+ background-color: hsla(0, 100%, 100%, 0.16);
+    color: hsla(0, 100%, 100%, 0.87);
+box-shadow: 0px 24px 38px 3px hsla(0,0%,0%,0.14), 0px 9px 46px 8px hsla(0,0%,0%,0.12), 0px 11px 15px -7px hsla(0,0%,0%,0.2)
+ */
+
+.dark {
+  background-color: var(--bg-transparent) !important;
+  color: var(--color-white) !important;
+  border: var(--border) !important;
+  border-radius: var(--border-radius) !important;
+}
+
+.light {
+  background-color: white;
+  color: black;
+  /* border: 2px solid black !important; */
+  border-radius: 22px;
+}
+
+.text-color {
+  color: var(--color-white) !important;
+}
+
+.light_mode {
+  color: black !important;
+}

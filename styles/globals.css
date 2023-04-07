@@ -6,8 +6,9 @@
 
 .containerStyleCard {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   justify-items: center;
+  margin-top: 20px;
 }
 
 .card-top {
@@ -17,7 +18,6 @@
 .form_gap {
   gap: 20px;
 }
-
-.light_mode {
-  color: black !important;
+.placeholder-color {
+  opacity: 0.2;
 }

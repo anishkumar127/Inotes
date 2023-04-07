@@ -1,10 +1,10 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import NavbarSection from "./NavbarSection";
 import CardDisplay from "./CardDisplay";
-
+import { SearchContext } from "@/context/context";
 const Notes = () => {
   const [arr, setArr] = useState<any>([]);
   const [data, setData] = useState<any>([]);
@@ -12,7 +12,9 @@ const Notes = () => {
   const [dialog, setDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
-  const [searchText, setSearchText] = useState("");
+  // const [searchText, setSearchText] = useState("");
+  const { theme, inputGroupText, inputGroupPlaceholder }: any =
+    useContext(SearchContext);
   const [input, setInput] = useState({
     title: "",
     desc: "",
@@ -107,20 +109,23 @@ const Notes = () => {
     });
   };
 
-  //   SEARCH
-  const onSearch = (e: any) => {
-    const { value } = e.target;
-    setSearchText(value);
-  };
+  // //   SEARCH
+  // const onSearch = (e: any) => {
+  //   const { value } = e.target;
+  //   setSearchText(value);
+  // };
 
   return (
     <>
-      <NavbarSection onSearch={onSearch} />
+      {/* <NavbarSection onSearch={onSearch} /> */}
       <div className="">
         <InputGroup className={`${!dialog && "mb-3"} `}>
-          <InputGroup.Text id="basic-addon1">Title</InputGroup.Text>
+          <InputGroup.Text id="basic-addon1" className={inputGroupText}>
+            Title
+          </InputGroup.Text>
 
           <Form.Control
+            className={inputGroupPlaceholder}
             placeholder="add title..."
             aria-label="title"
             aria-describedby="basic-addon1"
@@ -129,11 +134,14 @@ const Notes = () => {
             onChange={handleChange}
           />
         </InputGroup>
-        {dialog && <p className="text-danger mb-0">Please Enter Title</p>}
+        {dialog && <p className=" text-danger mb-0">Please Enter Title</p>}
 
         <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">Description</InputGroup.Text>
+          <InputGroup.Text id="basic-addon1" className={inputGroupText}>
+            Description
+          </InputGroup.Text>
           <Form.Control
+            className={inputGroupPlaceholder}
             placeholder="add desc..."
             aria-label="desc"
             aria-describedby="basic-addon1"
@@ -143,8 +151,11 @@ const Notes = () => {
           />
         </InputGroup>
         <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">Time</InputGroup.Text>
+          <InputGroup.Text id="basic-addon1" className={inputGroupText}>
+            Time
+          </InputGroup.Text>
           <Form.Control
+            className={inputGroupPlaceholder}
             placeholder="add time..."
             aria-label="time"
             aria-describedby="basic-addon1"
@@ -154,8 +165,11 @@ const Notes = () => {
           />
         </InputGroup>
         <InputGroup className="mb-3">
-          <InputGroup.Text id="basic-addon1">Type</InputGroup.Text>
+          <InputGroup.Text id="basic-addon1" className={inputGroupText}>
+            Type
+          </InputGroup.Text>
           <Form.Control
+            className={inputGroupPlaceholder}
             placeholder="add type..."
             aria-label="type"
             aria-describedby="basic-addon1"
@@ -192,7 +206,7 @@ const Notes = () => {
         edit={edit}
         handleUpdate={handleUpdate}
         handleDelete={handleDelete}
-        searchText={searchText}
+        // searchText={searchText}
       />
     </>
   );

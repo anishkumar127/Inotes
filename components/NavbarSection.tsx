@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useContext } from "react";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -9,10 +9,28 @@ import Button from "react-bootstrap/Button";
 import Image from "next/image";
 import light from "../assets/images/light.svg";
 import dark from "../assets/images/moon.svg";
+import Head from "next/head";
+import Link from "next/link";
+import { SearchContext } from "@/context/context";
 
-const NavbarSection = ({ onSearch }: any) => {
-  const [theme, setTheme] = useState(false);
-  const [themeColor, setThemeColor] = useState("bg-dark");
+const NavbarSection = () => {
+  const {
+    onSearch,
+    themeColor,
+    setThemeColor,
+    theme,
+    setTheme,
+    inputGroupText,
+    inputGroupPlaceholder,
+  }: any = useContext(SearchContext);
+
+  useEffect(() => {
+    if (theme) {
+      document.body.style.backgroundColor = "white";
+    } else {
+      document.body.style.backgroundColor = "black";
+    }
+  }, [theme]);
 
   useEffect(() => {
     const getTheme: any = localStorage.getItem("theme");
@@ -31,65 +49,17 @@ const NavbarSection = ({ onSearch }: any) => {
 
   return (
     <div>
-      {/* <Navbar bg={themeColor} variant="dark" className="mb-3">
-        <Container fluid>
-          <Navbar.Brand className={`${theme ? "light_mode" : ""}`} href="#home">
-            📝iNotes
-          </Navbar.Brand>
-          <Navbar.Offcanvas placement="end">
-            <Offcanvas.Body>
-              <Nav className="justify-content-end flex-grow-1 pe-3">
-                <Nav.Link
-                  href="#home"
-                  className={`${theme ? "light_mode" : ""}`}
-                >
-                  Home
-                </Nav.Link>
-                <Nav.Link
-                  href="#features"
-                  className={`${theme ? "light_mode" : ""}`}
-                >
-                  About
-                </Nav.Link>
-              </Nav>
-
-              <Form className="d-flex form_gap align-items-center">
-                <Form.Control
-                  type="search"
-                  placeholder="Search"
-                  className="me-2"
-                  aria-label="Search"
-                  onChange={onSearch}
-                />
-                <Button variant="outline-success">Search</Button>
-                {theme ? (
-                  <Image
-                    src={dark}
-                    width={35}
-                    height={35}
-                    alt="dark_mode"
-                    onClick={handleTheme}
-                  />
-                ) : (
-                  <Image
-                    src={light}
-                    width={35}
-                    height={35}
-                    alt="light_mode"
-                    onClick={handleTheme}
-                  />
-                )}
-              </Form>
-            </Offcanvas.Body>
-          </Navbar.Offcanvas>
-        </Container>
-      </Navbar> */}
-
+      <Head>
+        <title>Home</title>
+      </Head>
       <nav className={`${themeColor} navbar navbar-expand-lg bg-body-tertiary`}>
         <div className="container-fluid">
-          <a className={`navbar-brand ${theme ? "light_mode" : ""}`} href="#">
+          <Link
+            className={`navbar-brand ${theme ? "light_mode" : "text-color"}`}
+            href="/"
+          >
             📝iNotes
-          </a>
+          </Link>
           <button
             className="navbar-toggler"
             type="button"
@@ -104,31 +74,33 @@ const NavbarSection = ({ onSearch }: any) => {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a
-                  className={`nav-link active ${theme ? "light_mode" : ""}`}
+                <Link
+                  className={`nav-link active ${
+                    theme ? "light_mode" : "text-color"
+                  }`}
                   aria-current="page"
-                  href="#"
+                  href="/"
                 >
                   Home
-                </a>
+                </Link>
               </li>
               <li className="nav-item">
-                <a className={`nav-link ${theme ? "light_mode" : ""}`} href="#">
+                <Link
+                  className={`nav-link ${theme ? "light_mode" : "text-color"}`}
+                  href="/about"
+                >
                   About
-                </a>
+                </Link>
               </li>
             </ul>
-            <form className="d-flex form_gap align-items-center" role="search">
+            <form className="d-flex form_gap align-items-center " role="search">
               <input
-                className="form-control me-2"
+                className={`${inputGroupPlaceholder} form-control me-2`}
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
                 onChange={onSearch}
               />
-              {/* <button className="btn btn-outline-success" type="submit">
-                Search
-              </button> */}
               {theme ? (
                 <Image
                   src={dark}
