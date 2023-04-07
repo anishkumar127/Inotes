@@ -108,6 +108,17 @@ const Notes = () => {
       type: "",
     });
   };
+
+  // CANCEL HANDLE
+  const handleCancel = () => {
+    setEdit(false);
+    setInput({
+      title: "",
+      desc: "",
+      time: "",
+      type: "",
+    });
+  };
   return (
     <>
       <div>
@@ -180,11 +191,7 @@ const Notes = () => {
             <Button variant="success" onClick={UpdateSubmit} type="submit">
               Update
             </Button>
-            <Button
-              className="ms-2"
-              variant="success"
-              onClick={() => setEdit(false)}
-            >
+            <Button className="ms-2" variant="success" onClick={handleCancel}>
               Cancel
             </Button>
           </div>
