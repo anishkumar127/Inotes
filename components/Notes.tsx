@@ -12,7 +12,6 @@ const Notes = () => {
   const [dialog, setDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
-  // const [searchText, setSearchText] = useState("");
   const { theme, inputGroupText, inputGroupPlaceholder }: any =
     useContext(SearchContext);
   const [input, setInput] = useState({

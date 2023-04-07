@@ -28,7 +28,7 @@ const NavbarSection = () => {
     if (theme) {
       document.body.style.backgroundColor = "white";
     } else {
-      document.body.style.backgroundColor = "black";
+      document.body.style.backgroundColor = "#212121";
     }
   }, [theme]);
 

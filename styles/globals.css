@@ -19,5 +19,11 @@
   gap: 20px;
 }
 .placeholder-color {
-  opacity: 0.2;
+  background: gray !important;
+  color: white !important;
+}
+
+.placeholder-color::placeholder {
+  color: white !important;
+  opacity: 0.3 !important;
 }
