@@ -21,7 +21,7 @@ const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
               <Card
                 className={`${theme ? "light" : "dark"}`}
                 key={index}
-                style={{ width: "22rem", margin: "22px" }}
+                style={{ width: "28rem", margin: "22px" }}
               >
                 <Card.Body>
                   <Card.Title className="text-center">{title}</Card.Title>

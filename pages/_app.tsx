@@ -12,7 +12,6 @@ export default function App({ Component, pageProps }: AppProps) {
   const [themeColor, setThemeColor] = useState("bg-light");
 
   // COMMON CSS CLASS_NAME
-  // LESS CSS CLASS_NAME
   const inputGroupText = `${theme ? "" : "bg-secondary"}`;
   const inputGroupPlaceholder = `${theme ? "" : "placeholder-color"}`;
 
