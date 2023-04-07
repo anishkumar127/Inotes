@@ -126,9 +126,9 @@ const NavbarSection = ({ onSearch }: any) => {
                 aria-label="Search"
                 onChange={onSearch}
               />
-              <button className="btn btn-outline-success" type="submit">
+              {/* <button className="btn btn-outline-success" type="submit">
                 Search
-              </button>
+              </button> */}
               {theme ? (
                 <Image
                   src={dark}
