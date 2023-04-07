@@ -12,15 +12,15 @@ import dark from "../assets/images/moon.svg";
 
 const NavbarSection = ({ onSearch }: any) => {
   const [theme, setTheme] = useState(false);
-  const [themeColor, setThemeColor] = useState("dark");
+  const [themeColor, setThemeColor] = useState("bg-dark");
 
   useEffect(() => {
     const getTheme: any = localStorage.getItem("theme");
     setTheme(JSON.parse(getTheme));
     if (theme) {
-      setThemeColor("light");
+      setThemeColor("bg-light");
     } else {
-      setThemeColor("dark");
+      setThemeColor("bg-dark");
     }
   }, [theme]);
 
@@ -85,7 +85,7 @@ const NavbarSection = ({ onSearch }: any) => {
         </Container>
       </Navbar> */}
 
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className={`${themeColor} navbar navbar-expand-lg bg-body-tertiary`}>
         <div className="container-fluid">
           <a className={`navbar-brand ${theme ? "light_mode" : ""}`} href="#">
             📝iNotes

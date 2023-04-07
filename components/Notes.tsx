@@ -13,8 +13,6 @@ const Notes = () => {
   const [edit, setEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
   const [searchText, setSearchText] = useState("");
-  //   const [isSearch, setIsSearch] = useState(true);
-
   const [input, setInput] = useState({
     title: "",
     desc: "",
@@ -170,9 +168,18 @@ const Notes = () => {
 
       <div className="text-end">
         {edit ? (
-          <Button variant="success" onClick={UpdateSubmit} type="submit">
-            Update
-          </Button>
+          <div>
+            <Button variant="success" onClick={UpdateSubmit} type="submit">
+              Update
+            </Button>
+            <Button
+              className="ms-2"
+              variant="success"
+              onClick={() => setEdit(false)}
+            >
+              Cancel
+            </Button>
+          </div>
         ) : (
           <Button variant="primary" onClick={handleSubmit} type="submit">
             Submit

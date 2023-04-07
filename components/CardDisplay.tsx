@@ -39,17 +39,15 @@ const CardDisplay = ({
                     >
                       Edit
                     </Button>
-                    {edit ? (
-                      ""
-                    ) : (
-                      <Button
-                        variant="danger"
-                        className="ms-2"
-                        onClick={() => handleDelete(index)}
-                      >
-                        Delete
-                      </Button>
-                    )}
+
+                    <Button
+                      variant="danger"
+                      className={`ms-2 ${edit && "bg-secondary"}`}
+                      disabled={edit}
+                      onClick={() => handleDelete(index)}
+                    >
+                      Delete
+                    </Button>
                   </div>
                 </Card.Body>
               </Card>
