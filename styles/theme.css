@@ -41,3 +41,6 @@ box-shadow: 0px 24px 38px 3px hsla(0,0%,0%,0.14), 0px 9px 46px 8px hsla(0,0%,0%,
   box-shadow: 0 0 11px 3px white;
   border-radius: 12px;
 }
+input {
+  cursor: pointer !important;
+}
