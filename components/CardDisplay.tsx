@@ -3,7 +3,26 @@ import Card from "react-bootstrap/Card";
 import { SearchContext } from "@/context/context";
 import { useContext } from "react";
 
-const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
+interface Note {
+  title: string;
+  desc: string;
+  time: string;
+  type: string;
+  id: number;
+}
+interface CardDisplayProps {
+  arr: Note[];
+  edit: boolean;
+  handleUpdate: (index: number) => void;
+  handleDelete: (index: number) => void;
+}
+
+const CardDisplay = ({
+  arr,
+  handleUpdate,
+  handleDelete,
+  edit,
+}: CardDisplayProps) => {
   const { searchText, theme }: any = useContext(SearchContext);
   return (
     <>

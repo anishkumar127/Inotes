@@ -2,13 +2,21 @@ import { useEffect, useState } from "react";
 import CardDisplay from "./CardDisplay";
 import InputBar from "./InputBar";
 
+interface Note {
+  title: string;
+  desc: string;
+  time: string;
+  type: string;
+  id: number;
+}
+
 const Notes = () => {
-  const [arr, setArr] = useState<any>([]);
-  const [data, setData] = useState<any>([]);
-  const [isTrue, setIsTrue] = useState(false);
-  const [dialog, setDialog] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [editIndex, setEditIndex] = useState(-1);
+  const [arr, setArr] = useState<Note[]>([]);
+  const [data, setData] = useState<Note[]>([]);
+  const [isTrue, setIsTrue] = useState<boolean>(false);
+  const [dialog, setDialog] = useState<boolean>(false);
+  const [edit, setEdit] = useState<boolean>(false);
+  const [editIndex, setEditIndex] = useState<number>(-1);
   const [input, setInput] = useState({
     title: "",
     desc: "",
@@ -26,8 +34,6 @@ const Notes = () => {
   //  ------------------- START DELETE  -------------------
   //   DELETE
   const handleDelete = (index: number) => {
-    // Avoid unnecessary render with useEffect
-    // In the handleDelete function, we can move the localStorage code inside the setArr callback to avoid unnecessary renders.
     setArr((prevArr: any) => {
       const res = prevArr.filter((item: any) => item.id !== index);
       localStorage.setItem("items", JSON.stringify(res));
@@ -63,17 +69,6 @@ const Notes = () => {
   };
   //   EDIT SUBMIT
   const UpdateSubmit = () => {
-    // In the UpdateSubmit function, we can avoid using the splice method by using the map method to update the array.
-    // const newData = [...data];
-    // const editSubmitIndex = newData.findIndex((item: any) => {
-    //   return item.id === editIndex;
-    // });
-    // if (editSubmitIndex !== -1) {
-    //   newData[editSubmitIndex] = input;
-    // }
-    // setData(newData);
-    // arr.splice(editSubmitIndex, 1, input);
-
     const newData = data.map((item: any) => {
       if (item.id === editIndex) {
         return input;
