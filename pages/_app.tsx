@@ -1,6 +1,7 @@
 import Layout from "@/components/Layout";
 import "@/styles/globals.css";
 import "@/styles/theme.css";
+import "@/styles/about.css";
 import "bootstrap/dist/css/bootstrap.css";
 import type { AppProps } from "next/app";
 import { useState } from "react";
