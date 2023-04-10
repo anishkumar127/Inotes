@@ -121,7 +121,7 @@ const Notes = () => {
   return (
     <>
       <div>
-        <div style={{ padding: "30px" }}>
+        <div className="input-box-style ">
           <InputGroup className={`${!dialog && "mb-3"} `}>
             <InputGroup.Text id="basic-addon1" className={inputGroupText}>
               Title
@@ -181,25 +181,30 @@ const Notes = () => {
               onChange={handleChange}
             />
           </InputGroup>
+
+          <div className="text-end m-2">
+            {edit ? (
+              <div>
+                <Button variant="success" onClick={UpdateSubmit} type="submit">
+                  Update
+                </Button>
+                <Button
+                  className="ms-2"
+                  variant="success"
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </Button>
+              </div>
+            ) : (
+              <Button variant="primary" onClick={handleSubmit} type="submit">
+                Submit
+              </Button>
+            )}
+          </div>
         </div>
       </div>
 
-      <div className="text-end m-2">
-        {edit ? (
-          <div>
-            <Button variant="success" onClick={UpdateSubmit} type="submit">
-              Update
-            </Button>
-            <Button className="ms-2" variant="success" onClick={handleCancel}>
-              Cancel
-            </Button>
-          </div>
-        ) : (
-          <Button variant="primary" onClick={handleSubmit} type="submit">
-            Submit
-          </Button>
-        )}
-      </div>
       {/* CARD SECTION */}
       <CardDisplay
         arr={arr}
