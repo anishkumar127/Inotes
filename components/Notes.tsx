@@ -1,7 +1,7 @@
 import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, useId } from "react";
 import CardDisplay from "./CardDisplay";
 import { SearchContext } from "@/context/context";
 const Notes = () => {
@@ -18,6 +18,7 @@ const Notes = () => {
     desc: "",
     time: "",
     type: "",
+    id: Date.now(),
   });
 
   //   INPUT
@@ -28,29 +29,43 @@ const Notes = () => {
 
   //   DELETE
   const handleDelete = (index: number) => {
-    const res = arr.filter((item: any, i: number) => {
-      return i !== index;
+    console.log("I", index);
+
+    const res = arr.filter((item: any) => {
+      return item.id !== index;
     });
     setArr(res);
     // clear from local storage
     const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
-    savedDataM.splice(index, 1);
-    data.splice(index, 1);
+
+    const deleted = savedDataM.findIndex((item: any) => {
+      return item.id === index;
+    });
+    if (deleted !== -1) {
+      savedDataM.splice(deleted, 1);
+    }
+    data.splice(deleted, 1);
     localStorage.setItem("items", JSON.stringify(savedDataM));
   };
 
-  //   UPDATE
+  //   EDIT
   const handleUpdate = (index: number) => {
     setEdit(true);
     setEditIndex(index);
     const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
-    const { title, desc, time, type } = savedDataM[index];
-    setInput({
-      title,
-      desc,
-      time,
-      type,
+    const editIndexFind = savedDataM.findIndex((item: any) => {
+      return item.id === index;
     });
+    if (editIndexFind !== -1) {
+      const { title, desc, time, type, id } = savedDataM[editIndexFind];
+      setInput({
+        title,
+        desc,
+        time,
+        type,
+        id,
+      });
+    }
   };
   //   GET
   useEffect(() => {
@@ -90,21 +105,28 @@ const Notes = () => {
         desc: "",
         time: "",
         type: "",
+        id: Date.now(),
       });
     }
   };
-  //   UPDATE HANDLE
+  //   EDIT SUBMIT
   const UpdateSubmit = () => {
     const newData = [...data];
-    newData[editIndex] = input;
+    const editSubmitIndex = newData.findIndex((item: any) => {
+      return item.id === editIndex;
+    });
+    if (editSubmitIndex !== -1) {
+      newData[editSubmitIndex] = input;
+    }
     setData(newData);
-    arr.splice(editIndex, 1, input);
+    arr.splice(editSubmitIndex, 1, input);
     setEdit(false);
     setInput({
       title: "",
       desc: "",
       time: "",
       type: "",
+      id: Date.now(),
     });
   };
 
@@ -116,6 +138,7 @@ const Notes = () => {
       desc: "",
       time: "",
       type: "",
+      id: Date.now(),
     });
   };
   return (

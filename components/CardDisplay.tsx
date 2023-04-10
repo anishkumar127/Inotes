@@ -16,11 +16,11 @@ const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
               : item.title.toLowerCase().includes(searchText);
           })
           .map((item: any, index: number) => {
-            const { title, desc, time, type } = item;
+            const { title, desc, time, type, id } = item;
             return (
               <Card
                 className={`${theme ? "light" : "dark"}`}
-                key={index}
+                key={id}
                 style={{ width: "28rem", margin: "22px" }}
               >
                 <Card.Body>
@@ -35,10 +35,7 @@ const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
                     Type: <b>{type}</b>
                   </Card.Text>
                   <div className="text-end">
-                    <Button
-                      variant="success"
-                      onClick={() => handleUpdate(index)}
-                    >
+                    <Button variant="success" onClick={() => handleUpdate(id)}>
                       Edit
                     </Button>
 
@@ -46,7 +43,7 @@ const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
                       variant="danger"
                       className={`ms-2 ${edit && "bg-secondary"}`}
                       disabled={edit}
-                      onClick={() => handleDelete(index)}
+                      onClick={() => handleDelete(id)}
                     >
                       Delete
                     </Button>
