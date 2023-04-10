@@ -26,23 +26,20 @@ const Notes = () => {
   //  ------------------- START DELETE  -------------------
   //   DELETE
   const handleDelete = (index: number) => {
-    console.log("I", index);
-
-    const res = arr.filter((item: any) => {
-      return item.id !== index;
+    // Avoid unnecessary render with useEffect
+    // In the handleDelete function, we can move the localStorage code inside the setArr callback to avoid unnecessary renders.
+    setArr((prevArr: any) => {
+      const res = prevArr.filter((item: any) => item.id !== index);
+      localStorage.setItem("items", JSON.stringify(res));
+      return res;
     });
-    setArr(res);
     // clear from local storage
-    const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
-
-    const deleted = savedDataM.findIndex((item: any) => {
-      return item.id === index;
-    });
+    const savedDataM = JSON.parse(localStorage.getItem("items") || "[]");
+    const deleted = savedDataM.findIndex((item: any) => item.id === index);
     if (deleted !== -1) {
       savedDataM.splice(deleted, 1);
     }
-    data.splice(deleted, 1);
-    localStorage.setItem("items", JSON.stringify(savedDataM));
+    setData(savedDataM);
   };
   //  ------------------- START EDIT -------------------
   //   EDIT
@@ -66,15 +63,25 @@ const Notes = () => {
   };
   //   EDIT SUBMIT
   const UpdateSubmit = () => {
-    const newData = [...data];
-    const editSubmitIndex = newData.findIndex((item: any) => {
-      return item.id === editIndex;
+    // In the UpdateSubmit function, we can avoid using the splice method by using the map method to update the array.
+    // const newData = [...data];
+    // const editSubmitIndex = newData.findIndex((item: any) => {
+    //   return item.id === editIndex;
+    // });
+    // if (editSubmitIndex !== -1) {
+    //   newData[editSubmitIndex] = input;
+    // }
+    // setData(newData);
+    // arr.splice(editSubmitIndex, 1, input);
+
+    const newData = data.map((item: any) => {
+      if (item.id === editIndex) {
+        return input;
+      }
+      return item;
     });
-    if (editSubmitIndex !== -1) {
-      newData[editSubmitIndex] = input;
-    }
     setData(newData);
-    arr.splice(editSubmitIndex, 1, input);
+    setArr(newData);
     setEdit(false);
     setInput({
       title: "",
@@ -123,6 +130,7 @@ const Notes = () => {
   //   SUBMIT
   const handleSubmit = (e: any) => {
     e.preventDefault();
+    // if (input.title === "" || input.desc === "") {
     if (input.title === "") {
       setDialog(true);
       setTimeout(() => {

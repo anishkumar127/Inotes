@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { SearchContext } from "@/context/context";
+
 const InputBar = ({
   input,
   handleChange,
@@ -48,6 +49,7 @@ const InputBar = ({
             onChange={handleChange}
           />
         </InputGroup>
+        {/* {dialog && <p className=" text-danger mb-0">Please Enter Desc</p>} */}
         <InputGroup className="mb-3">
           <InputGroup.Text id="basic-addon1" className={inputGroupText}>
             Time
