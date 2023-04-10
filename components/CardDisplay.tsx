@@ -18,7 +18,7 @@ const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
             const { title, desc, time, type, id } = item;
             return (
               <Card
-                className={`${theme ? "light" : "dark"}`}
+                className={`${theme ? "light light-card-style" : "dark"}`}
                 key={id}
                 style={{ width: "28rem", margin: "22px" }}
               >

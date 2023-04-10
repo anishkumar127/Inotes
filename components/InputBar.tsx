@@ -12,11 +12,11 @@ const InputBar = ({
   handleCancel,
   UpdateSubmit,
 }: any) => {
-  const { inputGroupText, inputGroupPlaceholder }: any =
+  const { inputGroupText, inputGroupPlaceholder, theme }: any =
     useContext(SearchContext);
   return (
     <>
-      <div className="input-box-style ">
+      <div className={`${theme ? "light-input-box-style" : "input-box-style"}`}>
         <InputGroup className={`${!dialog && "mb-3"} `}>
           <InputGroup.Text id="basic-addon1" className={inputGroupText}>
             Title
