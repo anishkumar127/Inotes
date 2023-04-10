@@ -2,7 +2,6 @@ import Form from "react-bootstrap/Form";
 import InputGroup from "react-bootstrap/InputGroup";
 import Button from "react-bootstrap/Button";
 import { useContext, useEffect, useState } from "react";
-import NavbarSection from "./NavbarSection";
 import CardDisplay from "./CardDisplay";
 import { SearchContext } from "@/context/context";
 const Notes = () => {
@@ -12,7 +11,7 @@ const Notes = () => {
   const [dialog, setDialog] = useState(false);
   const [edit, setEdit] = useState(false);
   const [editIndex, setEditIndex] = useState(-1);
-  const { theme, inputGroupText, inputGroupPlaceholder }: any =
+  const { inputGroupText, inputGroupPlaceholder }: any =
     useContext(SearchContext);
   const [input, setInput] = useState({
     title: "",
@@ -36,6 +35,7 @@ const Notes = () => {
     // clear from local storage
     const savedDataM: any = JSON.parse(localStorage.getItem("items") || "[]");
     savedDataM.splice(index, 1);
+    data.splice(index, 1);
     localStorage.setItem("items", JSON.stringify(savedDataM));
   };
 

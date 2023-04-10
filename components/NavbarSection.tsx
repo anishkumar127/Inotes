@@ -20,7 +20,6 @@ const NavbarSection = () => {
     setThemeColor,
     theme,
     setTheme,
-    inputGroupText,
     inputGroupPlaceholder,
   }: any = useContext(SearchContext);
 
