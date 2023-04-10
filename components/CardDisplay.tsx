@@ -4,8 +4,7 @@ import { SearchContext } from "@/context/context";
 import { useContext } from "react";
 
 const CardDisplay = ({ arr, handleUpdate, handleDelete, edit }: any) => {
-  const { searchText, themeColor, setThemeColor, theme }: any =
-    useContext(SearchContext);
+  const { searchText, theme }: any = useContext(SearchContext);
   return (
     <>
       <div className="containerStyleCard">

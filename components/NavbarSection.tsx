@@ -1,11 +1,4 @@
-import { useState, useEffect, useLayoutEffect, useContext } from "react";
-import Offcanvas from "react-bootstrap/Offcanvas";
-import Container from "react-bootstrap/Container";
-import Nav from "react-bootstrap/Nav";
-import Navbar from "react-bootstrap/Navbar";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-
+import { useEffect, useContext } from "react";
 import Image from "next/image";
 import light from "../assets/images/light.svg";
 import dark from "../assets/images/moon.svg";
